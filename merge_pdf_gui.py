@@ -24,6 +24,7 @@ def merge_pdfs(infiles, outfile):
 def choose_directory_callback():
     directory = filedialog.askdirectory(initialdir="", )
     input_path.set(directory)
+    update_label(text='', bg=original_label_color)
 
 
 def save_file_as_callback():
@@ -37,9 +38,9 @@ def unlock_callback():
     infiles = glob.glob(inputdir + "/*.pdf")
     try:
         unlock_pdfs(infiles)
-        operation_complete_label.config(bg='green', text='Unlocked PDFs Successfully')
+        update_label(bg='green', text='Unlocked PDFs Successfully')
     except:
-        operation_complete_label.config(bg='red', text='Unable to unlock PDFs')
+        update_label(bg='red', text='Unable to unlock PDFs')
 
 
 def execute_callback():
@@ -52,9 +53,14 @@ def execute_callback():
     try:
         unlock_pdfs(infiles)
         merge_pdfs(infiles, outfile)
-        operation_complete_label.config(bg='green', text='Unlocked & Merged PDFs Successfully')
+        update_label(bg='green', text='Unlocked & Merged PDFs Successfully')
     except:
-        operation_complete_label.config(bg='red', text='Unable to unlock & merge PDFs')
+        update_label(bg='red', text='Unable to unlock & merge PDFs')
+
+
+def update_label(text, bg):
+    operation_complete_label.config(bg=bg,
+                                    text=text)
 
 
 if __name__ == '__main__':
@@ -74,6 +80,7 @@ if __name__ == '__main__':
     select_input_dir.place(x=290, y=10)
 
     operation_complete_label = Label()
+    original_label_color = operation_complete_label.cget("background")
     operation_complete_label.place(x=110, y=40)
     unlock_button = Button(text='Unlock PDFs')
     unlock_button.config(command=unlock_callback)

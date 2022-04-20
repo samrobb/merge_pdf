@@ -23,7 +23,3 @@ if __name__ == '__main__':
     infiles = glob.glob("*.pdf")
     unlock_pdfs(infiles)
     merge_pdfs(infiles)
-
-
-
-
